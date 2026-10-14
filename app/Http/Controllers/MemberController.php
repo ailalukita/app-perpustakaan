@@ -8,14 +8,12 @@ use App\Http\Requests\StoreMemberRequest;
 
 class MemberController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $members = Member::when($request->search, function ($query, $search) {
-            $query->where('nama', 'like', "%{$search}%");
-        })->paginate(10);
+    $members = Member::paginate(10);
 
-        return view('members.index', compact('members'));
-    }
+    return view('members.index', compact('members'));
+    }   
 
     public function create()
     {
@@ -30,13 +28,6 @@ class MemberController extends Controller
 
         return redirect()->route('members.index')
             ->with('success', "Anggota \"{$validated['nama']}\" berhasil ditambahkan.");
-    }
-
-    public function show(string $id)
-    {
-        $member = Member::findOrFail($id);
-
-        return view('members.show', compact('member'));
     }
 
     public function edit(string $id)
@@ -64,7 +55,12 @@ class MemberController extends Controller
         return redirect()->route('members.index')
             ->with('success', "Anggota \"{$validated['nama']}\" berhasil diperbarui.");
     }
+    public function show(string $id)
+{
+    $member = Member::with(['loans.loanItems.book', 'loans.user'])->findOrFail($id);
 
+    return view('members.show', compact('member'));
+}
     public function destroy(string $id)
     {
         $member = Member::findOrFail($id);

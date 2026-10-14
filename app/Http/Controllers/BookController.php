@@ -34,11 +34,11 @@ class BookController extends Controller
     }
 
     public function show(string $id)
-    {
-        $book = Book::findOrFail($id);
+{
+    $book = Book::with('category')->findOrFail($id);
 
-        return view('books.show', compact('book'));
-    }
+    return view('books.show', compact('book'));
+}
 
     public function edit(string $id)
     {

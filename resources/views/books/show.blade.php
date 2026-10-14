@@ -40,9 +40,10 @@
             <th>Stok</th>
             <td>{{ $book['stok'] }}</td>
         </tr>
+        {{-- File: resources/views/books/show.blade.php (potongan) --}}
         <tr>
-            <th>Kategori</th>
-            <td>{{ $book['kategori'] }}</td>
+         <th>Kategori</th>
+        <td>{{ $book['nama_kategori'] }}</td>
         </tr>
     </table>
 </body>
